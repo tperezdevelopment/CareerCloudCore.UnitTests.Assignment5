@@ -564,48 +564,56 @@ namespace CareerCloudCore.UnitTests.Assignment5
         {
             ApplicantSkillController controller = new ApplicantSkillController();
             var result = controller.GetApplicantSkill(_applicantSkills.Id);
-            var applicantSkillResult = result as ObjectResult;
+            var applicantSkillResults = result as OkObjectResult;
+            //var applicantSkillResult = result as OkNegotiatedContentResult<ApplicantSkillPoco>;
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(applicantSkillResult);
-            Assert.IsNotNull(applicantSkillResult.Value);
-            ApplicantSkillPoco poco = (ApplicantSkillPoco)applicantSkillResult.Value;
-            Assert.AreEqual(_applicantSkills.Id, poco.Id);
-            Assert.AreEqual(_applicantSkills.Applicant, poco.Applicant);
-            Assert.AreEqual(_applicantSkills.Skill, poco.Skill);
-            Assert.AreEqual(_applicantSkills.SkillLevel, poco.SkillLevel);
-            Assert.AreEqual(_applicantSkills.StartMonth, poco.StartMonth);
-            Assert.AreEqual(_applicantSkills.StartYear, poco.StartYear);
-            Assert.AreEqual(_applicantSkills.EndMonth, poco.EndMonth);
-            Assert.AreEqual(_applicantSkills.EndYear, apoco.EndYear);
+            Assert.IsNotNull(applicantSkillResults);
+            Assert.IsNotNull(applicantSkillResults.Value);
+            ApplicantSkillPoco applicantSkillResult = applicantSkillResults.Value as ApplicantSkillPoco;
+            Assert.AreEqual(_applicantSkills.Id, applicantSkillResult.Id);
+            Assert.AreEqual(_applicantSkills.Applicant, applicantSkillResult.Applicant);
+            Assert.AreEqual(_applicantSkills.Skill, applicantSkillResult.Skill);
+            Assert.AreEqual(_applicantSkills.SkillLevel, applicantSkillResult.SkillLevel);
+            Assert.AreEqual(_applicantSkills.StartMonth, applicantSkillResult.StartMonth);
+            Assert.AreEqual(_applicantSkills.StartYear, applicantSkillResult.StartYear);
+            Assert.AreEqual(_applicantSkills.EndMonth, applicantSkillResult.EndMonth);
+            Assert.AreEqual(_applicantSkills.EndYear, applicantSkillResult.EndYear);
         }
 
         private void ApplicantResumeCheck()
         {
             ApplicantResumeController controller = new ApplicantResumeController();
             var result = controller.GetApplicantResume(_applicantResume.Id);
-            var contentResult = result as OkNegotiatedContentResult<ApplicantResumePoco>;
+            var contentResults = result as OkObjectResult;
+           // var contentResult = result as OkNegotiatedContentResult<ApplicantResumePoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_applicantResume.Id, contentResult.Content.Id);
-            Assert.AreEqual(_applicantResume.Applicant, contentResult.Content.Applicant);
-            Assert.AreEqual(_applicantResume.Resume, contentResult.Content.Resume);
-            Assert.AreEqual(_applicantResume.LastUpdated.Value.Date, contentResult.Content.LastUpdated.Value.Date);
+            Assert.IsNotNull(contentResults);
+            Assert.IsNotNull(contentResults.Value);
+            Assert.AreEqual(200, contentResults.StatusCode);
+
+            ApplicantResumePoco contentResult = contentResults.Value as ApplicantResumePoco;
+            Assert.AreEqual(_applicantResume.Id, contentResult.Id);
+            Assert.AreEqual(_applicantResume.Applicant, contentResult.Applicant);
+            Assert.AreEqual(_applicantResume.Resume, contentResult.Resume);
+            Assert.AreEqual(_applicantResume.LastUpdated.Value.Date, contentResult.LastUpdated.Value.Date);
         }
 
         private void ApplicantJobApplicationCheck()
         {
             ApplicantJobApplicationController controller = new ApplicantJobApplicationController();
             var result = controller.GetApplicantJobApplication(_applicantJobApplication.Id);
-            var contentResult = result as OkNegotiatedContentResult<ApplicantJobApplicationPoco>;
-
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_applicantJobApplication.Id, contentResult.Content.Id);
-            Assert.AreEqual(_applicantJobApplication.Applicant, contentResult.Content.Applicant);
-            Assert.AreEqual(_applicantJobApplication.Job, contentResult.Content.Job);
-            Assert.AreEqual(_applicantJobApplication.ApplicationDate.Date, contentResult.Content.ApplicationDate.Date);
+            var contentResults = result as OkObjectResult;
+            //  var contentResult = result as OkNegotiatedContentResult<ApplicantJobApplicationPoco>;
+            Assert.IsNotNull(contentResults);
+            Assert.IsNotNull(contentResults.Value);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            //Assert.IsNotNull(contentResult);
+            //Assert.IsNotNull(contentResult.Content);
+            ApplicantJobApplicationPoco contentResult = contentResults.Value as ApplicantJobApplicationPoco;
+            Assert.AreEqual(_applicantJobApplication.Id, contentResult.Id);
+            Assert.AreEqual(_applicantJobApplication.Applicant, contentResult.Applicant);
+            Assert.AreEqual(_applicantJobApplication.Job, contentResult.Job);
+            Assert.AreEqual(_applicantJobApplication.ApplicationDate.Date, contentResult.ApplicationDate.Date);
         }
 
 
@@ -613,194 +621,260 @@ namespace CareerCloudCore.UnitTests.Assignment5
         {
             ApplicantEducationController controller = new ApplicantEducationController();
             var result = controller.GetApplicantEducation(_applicantEducation.Id);
-            var contentResult = result as OkNegotiatedContentResult<ApplicantEducationPoco>;
+            var contentResults = result as OkObjectResult;
+            
+            //var contentResult = result as OkNegotiatedContentResult<ApplicantEducationPoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_applicantEducation.Id, contentResult.Content.Id);
-            Assert.AreEqual(_applicantEducation.Applicant, contentResult.Content.Applicant);
-            Assert.AreEqual(_applicantEducation.Major, contentResult.Content.Major);
-            Assert.AreEqual(_applicantEducation.CertificateDiploma, contentResult.Content.CertificateDiploma);
-            Assert.AreEqual(_applicantEducation.StartDate.Value.Date, contentResult.Content.StartDate.Value.Date);
-            Assert.AreEqual(_applicantEducation.CompletionDate.Value.Date, contentResult.Content.CompletionDate.Value.Date);
-            Assert.AreEqual(_applicantEducation.CompletionPercent, contentResult.Content.CompletionPercent);
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            ApplicantEducationPoco contentResult = contentResults.Value as ApplicantEducationPoco;
+            Assert.AreEqual(_applicantEducation.Id, contentResult.Id);
+            Assert.AreEqual(_applicantEducation.Applicant, contentResult.Applicant);
+            Assert.AreEqual(_applicantEducation.Major, contentResult.Major);
+            Assert.AreEqual(_applicantEducation.CertificateDiploma, contentResult.CertificateDiploma);
+            Assert.AreEqual(_applicantEducation.StartDate.Value.Date, contentResult.StartDate.Value.Date);
+            Assert.AreEqual(_applicantEducation.CompletionDate.Value.Date, contentResult.CompletionDate.Value.Date);
+            Assert.AreEqual(_applicantEducation.CompletionPercent, contentResult.CompletionPercent);
         }
 
         private void ApplicantProfileCheck()
         {
             ApplicantProfileController controller = new ApplicantProfileController();
             var result = controller.GetApplicantProfile(_applicantProfile.Id);
-            var contentResult = result as OkNegotiatedContentResult<ApplicantProfilePoco>;
+            var contentResults = result as OkObjectResult;
+            //  var contentResult = result as OkNegotiatedContentResult<ApplicantProfilePoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_applicantProfile.Id, contentResult.Content.Id);
-            Assert.AreEqual(_applicantProfile.Login, contentResult.Content.Login);
-            Assert.AreEqual(_applicantProfile.CurrentSalary, contentResult.Content.CurrentSalary);
-            Assert.AreEqual(_applicantProfile.CurrentRate, contentResult.Content.CurrentRate);
-            Assert.AreEqual(_applicantProfile.Currency, contentResult.Content.Currency);
-            Assert.AreEqual(_applicantProfile.Country, contentResult.Content.Country);
-            Assert.AreEqual(_applicantProfile.Province, contentResult.Content.Province);
-            Assert.AreEqual(_applicantProfile.Street, contentResult.Content.Street);
-            Assert.AreEqual(_applicantProfile.City, contentResult.Content.City);
-            Assert.AreEqual(_applicantProfile.PostalCode, contentResult.Content.PostalCode);
+            //  Assert.IsNotNull(contentResult);
+            //  Assert.IsNotNull(contentResult.Content);
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            ApplicantProfilePoco contentResult = contentResults.Value as ApplicantProfilePoco;
+            Assert.AreEqual(_applicantProfile.Id, contentResult.Id);
+            Assert.AreEqual(_applicantProfile.Login, contentResult.Login);
+            Assert.AreEqual(_applicantProfile.CurrentSalary, contentResult.CurrentSalary);
+            Assert.AreEqual(_applicantProfile.CurrentRate, contentResult.CurrentRate);
+            Assert.AreEqual(_applicantProfile.Currency, contentResult.Currency);
+            Assert.AreEqual(_applicantProfile.Country, contentResult.Country);
+            Assert.AreEqual(_applicantProfile.Province, contentResult.Province);
+            Assert.AreEqual(_applicantProfile.Street, contentResult.Street);
+            Assert.AreEqual(_applicantProfile.City, contentResult.City);
+            Assert.AreEqual(_applicantProfile.PostalCode, contentResult.PostalCode);
         }
 
         private void SecurityLoginRoleCheck()
         {
             SecurityLoginsRoleController controller = new SecurityLoginsRoleController();
             var result = controller.GetSecurityLoginsRole(_securityLoginRole.Id);
-            var contentResult = result as OkNegotiatedContentResult<SecurityLoginsRolePoco>;
+            //var contentResult = result as OkNegotiatedContentResult<SecurityLoginsRolePoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_securityLoginRole.Id, contentResult.Content.Id);
-            Assert.AreEqual(_securityLoginRole.Login, contentResult.Content.Login);
-            Assert.AreEqual(_securityLoginRole.Role, contentResult.Content.Role);
+            SecurityLoginsRolePoco contentResult = contentResults.Value as SecurityLoginsRolePoco;
+            //Assert.IsNotNull(contentResult);
+            //Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_securityLoginRole.Id, contentResult.Id);
+            Assert.AreEqual(_securityLoginRole.Login, contentResult.Login);
+            Assert.AreEqual(_securityLoginRole.Role, contentResult.Role);
         }
 
         private void SecurityRoleCheck()
         {
             SecurityRoleController controller = new SecurityRoleController();
             var result = controller.GetSecurityRole(_securityRole.Id);
-            var contentResult = result as OkNegotiatedContentResult<SecurityRolePoco>;
+            //var contentResult = result as OkNegotiatedContentResult<SecurityRolePoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_securityRole.Id, contentResult.Content.Id);
-            Assert.AreEqual(_securityRole.Role, contentResult.Content.Role);
-            Assert.AreEqual(_securityRole.IsInactive, contentResult.Content.IsInactive);
+            SecurityRolePoco contentResult = contentResults.Value as SecurityRolePoco;
+           // Assert.IsNotNull(contentResult);
+           // Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_securityRole.Id, contentResult.Id);
+            Assert.AreEqual(_securityRole.Role, contentResult.Role);
+            Assert.AreEqual(_securityRole.IsInactive, contentResult.IsInactive);
         }
 
         private void SecurityLoginLogCheck()
         {
             SecurityLoginsLogController controller = new SecurityLoginsLogController();
             var result = controller.GetSecurityLoginLog(_securityLoginLog.Id);
-            var contentResult = result as OkNegotiatedContentResult<SecurityLoginsLogPoco>;
+            //  var contentResult = result as OkNegotiatedContentResult<SecurityLoginsLogPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_securityLoginLog.Id, contentResult.Content.Id);
-            Assert.AreEqual(_securityLoginLog.Login, contentResult.Content.Login);
-            Assert.AreEqual(_securityLoginLog.SourceIP, contentResult.Content.SourceIP);
-            Assert.AreEqual(_securityLoginLog.LogonDate.Date, contentResult.Content.LogonDate.Date);
+            SecurityLoginsLogPoco contentResult = contentResults.Value as SecurityLoginsLogPoco;
+
+          //  Assert.IsNotNull(contentResult);
+          //  Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_securityLoginLog.Id, contentResult.Id);
+            Assert.AreEqual(_securityLoginLog.Login, contentResult.Login);
+            Assert.AreEqual(_securityLoginLog.SourceIP, contentResult.SourceIP);
+            Assert.AreEqual(_securityLoginLog.LogonDate.Date, contentResult.LogonDate.Date);
         }
 
         private void SecurityLoginCheck()
         {
             SecurityLoginController controller = new SecurityLoginController();
             var result = controller.GetSecurityLogin(_securityLogin.Id);
-            var contentResult = result as OkNegotiatedContentResult<SecurityLoginPoco>;
+            // var contentResult = result as OkNegotiatedContentResult<SecurityLoginPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            SecurityLoginPoco contentResult = contentResults.Value as SecurityLoginPoco;
 
             // Fields changed by SecurityLoginLogic commented out
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_securityLogin.Id, contentResult.Content.Id);
-            Assert.AreEqual(_securityLogin.Login, contentResult.Content.Login);
+          //  Assert.IsNotNull(contentResult);
+         //   Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_securityLogin.Id, contentResult.Id);
+            Assert.AreEqual(_securityLogin.Login, contentResult.Login);
             // ########## Not checked because the logic layer overwrites these properties
             //Assert.AreEqual(_securityLogin.Password, securityLoginPoco.Password);
             //Assert.AreEqual(_securityLogin.Created.Date, securityLoginPoco.Created.Date);
             //Assert.AreEqual(_securityLogin.PasswordUpdate, securityLoginPoco.PasswordUpdate);
-            Assert.AreEqual(_securityLogin.AgreementAccepted.Value.Date, contentResult.Content.AgreementAccepted.Value.Date);
+            Assert.AreEqual(_securityLogin.AgreementAccepted.Value.Date, contentResult.AgreementAccepted.Value.Date);
             // ########## Not checked because the logic layer overwrites these properties
             //Assert.AreEqual(_securityLogin.IsLocked, securityLoginPoco.IsLocked);
             //Assert.AreEqual(_securityLogin.IsInactive, securityLoginPoco.IsInactive);
-            Assert.AreEqual(_securityLogin.EmailAddress, contentResult.Content.EmailAddress);
-            Assert.AreEqual(_securityLogin.PhoneNumber, contentResult.Content.PhoneNumber);
-            Assert.AreEqual(_securityLogin.FullName, contentResult.Content.FullName);
+            Assert.AreEqual(_securityLogin.EmailAddress, contentResult.EmailAddress);
+            Assert.AreEqual(_securityLogin.PhoneNumber, contentResult.PhoneNumber);
+            Assert.AreEqual(_securityLogin.FullName, contentResult.FullName);
             // ########## Not checked because the logic layer overwrites these properties
             //Assert.AreEqual(_securityLogin.ForceChangePassword, securityLoginPoco.ForceChangePassword);
-            Assert.AreEqual(_securityLogin.PrefferredLanguage, contentResult.Content.PrefferredLanguage);
+            Assert.AreEqual(_securityLogin.PrefferredLanguage, contentResult.PrefferredLanguage);
         }
 
         private void CompanyJobSkillCheck()
         {
             CompanyJobSkillController controller = new CompanyJobSkillController();
             var result = controller.GetCompanyJobSkill(_companyJobSkill.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyJobSkillPoco>;
+            //    var contentResult = result as OkNegotiatedContentResult<CompanyJobSkillPoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyJobSkill.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyJobSkill.Job, contentResult.Content.Job);
-            Assert.AreEqual(_companyJobSkill.Skill, contentResult.Content.Skill);
-            Assert.AreEqual(_companyJobSkill.SkillLevel, contentResult.Content.SkillLevel);
-            Assert.AreEqual(_companyJobSkill.Importance, contentResult.Content.Importance);
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            CompanyJobSkillPoco contentResult = contentResults.Value as CompanyJobSkillPoco;
+          //  Assert.IsNotNull(contentResult);
+          //  Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyJobSkill.Id, contentResult.Id);
+            Assert.AreEqual(_companyJobSkill.Job, contentResult.Job);
+            Assert.AreEqual(_companyJobSkill.Skill, contentResult.Skill);
+            Assert.AreEqual(_companyJobSkill.SkillLevel, contentResult.SkillLevel);
+            Assert.AreEqual(_companyJobSkill.Importance, contentResult.Importance);
         }
 
         private void CompanyJobEducationCheck()
         {
             CompanyJobEducationController controller = new CompanyJobEducationController();
             var result = controller.GetCompanyJobEducation(_companyJobEducation.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyJobEducationPoco>;
+            // var contentResult = result as OkNegotiatedContentResult<CompanyJobEducationPoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyJobEducation.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyJobEducation.Job, contentResult.Content.Job);
-            Assert.AreEqual(_companyJobEducation.Major, contentResult.Content.Major);
-            Assert.AreEqual(_companyJobEducation.Importance, contentResult.Content.Importance);
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            CompanyJobEducationPoco contentResult = contentResults.Value as CompanyJobEducationPoco;
+         //   Assert.IsNotNull(contentResult);
+          //  Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyJobEducation.Id, contentResult.Id);
+            Assert.AreEqual(_companyJobEducation.Job, contentResult.Job);
+            Assert.AreEqual(_companyJobEducation.Major, contentResult.Major);
+            Assert.AreEqual(_companyJobEducation.Importance, contentResult.Importance);
         }
 
         private void CompanyLocationCheck()
         {
             CompanyLocationController controller = new CompanyLocationController();
             var result = controller.GetCompanyLocation(_companyLocation.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyLocationPoco>;
+            //  var contentResult = result as OkNegotiatedContentResult<CompanyLocationPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyLocation.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyLocation.Company, contentResult.Content.Company);
-            Assert.AreEqual(_companyLocation.CountryCode.PadRight(10), contentResult.Content.CountryCode);
-            Assert.AreEqual(_companyLocation.Province.PadRight(10), contentResult.Content.Province);
-            Assert.AreEqual(_companyLocation.Street, contentResult.Content.Street);
-            Assert.AreEqual(_companyLocation.City, contentResult.Content.City);
-            Assert.AreEqual(_companyLocation.PostalCode.PadRight(20), contentResult.Content.PostalCode);
+           CompanyLocationPoco contentResult = contentResults.Value as CompanyLocationPoco;
+            //   Assert.IsNotNull(contentResult);
+            //    Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyLocation.Id, contentResult.Id);
+            Assert.AreEqual(_companyLocation.Company, contentResult.Company);
+            Assert.AreEqual(_companyLocation.CountryCode.PadRight(10), contentResult.CountryCode);
+            Assert.AreEqual(_companyLocation.Province.PadRight(10), contentResult.Province);
+            Assert.AreEqual(_companyLocation.Street, contentResult.Street);
+            Assert.AreEqual(_companyLocation.City, contentResult.City);
+            Assert.AreEqual(_companyLocation.PostalCode.PadRight(20), contentResult.PostalCode);
         }
 
         private void CompanyJobDescriptionCheck()
         {
             CompanyJobsDescriptionController controller = new CompanyJobsDescriptionController();
             var result = controller.GetCompanyJobsDescription(_companyJobDescription.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyJobDescriptionPoco>;
+            //  var contentResult = result as OkNegotiatedContentResult<CompanyJobDescriptionPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyJobDescription.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyJobDescription.Job, contentResult.Content.Job);
-            Assert.AreEqual(_companyJobDescription.JobDescriptions, contentResult.Content.JobDescriptions);
-            Assert.AreEqual(_companyJobDescription.JobName, contentResult.Content.JobName);
+            CompanyJobDescriptionPoco contentResult = contentResults.Value as CompanyJobDescriptionPoco;
+            //     Assert.IsNotNull(contentResult);
+            //    Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyJobDescription.Id, contentResult.Id);
+            Assert.AreEqual(_companyJobDescription.Job, contentResult.Job);
+            Assert.AreEqual(_companyJobDescription.JobDescriptions, contentResult.JobDescriptions);
+            Assert.AreEqual(_companyJobDescription.JobName, contentResult.JobName);
         }
 
         private void CompanyJobCheck()
         {
             CompanyJobController controller = new CompanyJobController();
             var result = controller.GetCompanyJob(_companyJob.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyJobPoco>;
+            //  var contentResult = result as OkNegotiatedContentResult<CompanyJobPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyJob.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyJob.Company, contentResult.Content.Company);
-            Assert.AreEqual(_companyJob.ProfileCreated, contentResult.Content.ProfileCreated);
-            Assert.AreEqual(_companyJob.IsInactive, contentResult.Content.IsInactive);
-            Assert.AreEqual(_companyJob.IsCompanyHidden, contentResult.Content.IsCompanyHidden);
+            CompanyJobPoco contentResult = contentResults.Value as CompanyJobPoco;
+            //  Assert.IsNotNull(contentResult);
+            //  Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyJob.Id, contentResult.Id);
+            Assert.AreEqual(_companyJob.Company, contentResult.Company);
+            Assert.AreEqual(_companyJob.ProfileCreated, contentResult.ProfileCreated);
+            Assert.AreEqual(_companyJob.IsInactive, contentResult.IsInactive);
+            Assert.AreEqual(_companyJob.IsCompanyHidden, contentResult.IsCompanyHidden);
         }
 
         private void CompanyDescriptionCheck()
         {
             CompanyDescriptionController controller = new CompanyDescriptionController();
             ActionResult result = controller.GetCompanyDescription(_companyDescription.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyDescriptionPoco>;
+            // var contentResult = result as OkNegotiatedContentResult<CompanyDescriptionPoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyDescription.Id, contentResult.Content.Id);
-            Assert.AreEqual(_companyDescription.CompanyDescription, contentResult.Content.CompanyDescription);
-            Assert.AreEqual(_companyDescription.CompanyName, contentResult.Content.CompanyName);
-            Assert.AreEqual(_companyDescription.LanguageId, contentResult.Content.LanguageId);
-            Assert.AreEqual(_companyDescription.Company, contentResult.Content.Company);
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+            CompanyDescriptionPoco contentResult = contentResults.Value as CompanyDescriptionPoco;
+            // Assert.IsNotNull(contentResult);
+            //   Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyDescription.Id, contentResult.Id);
+            Assert.AreEqual(_companyDescription.CompanyDescription, contentResult.CompanyDescription);
+            Assert.AreEqual(_companyDescription.CompanyName, contentResult.CompanyName);
+            Assert.AreEqual(_companyDescription.LanguageId, contentResult.LanguageId);
+            Assert.AreEqual(_companyDescription.Company, contentResult.Company);
         }
 
 
@@ -808,61 +882,84 @@ namespace CareerCloudCore.UnitTests.Assignment5
         {
             CompanyProfileController controller = new CompanyProfileController();
             ActionResult result = controller.GetCompanyProfile(_companyProfile.Id);
-            var contentResult = result as OkNegotiatedContentResult<CompanyProfilePoco>;
+            //   var contentResult = result as OkNegotiatedContentResult<CompanyProfilePoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_companyProfile.CompanyWebsite, contentResult.Content.CompanyWebsite);
-            Assert.AreEqual(_companyProfile.ContactName, contentResult.Content.ContactName);
-            Assert.AreEqual(_companyProfile.ContactPhone, contentResult.Content.ContactPhone);
-            Assert.AreEqual(_companyProfile.RegistrationDate, contentResult.Content.RegistrationDate);
-            Assert.AreEqual(_companyProfile.Id, contentResult.Content.Id);
+            CompanyProfilePoco contentResult = contentResults.Value as CompanyProfilePoco;
+
+            //   Assert.IsNotNull(contentResult);
+            //   Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_companyProfile.CompanyWebsite, contentResult.CompanyWebsite);
+            Assert.AreEqual(_companyProfile.ContactName, contentResult.ContactName);
+            Assert.AreEqual(_companyProfile.ContactPhone, contentResult.ContactPhone);
+            Assert.AreEqual(_companyProfile.RegistrationDate, contentResult.RegistrationDate);
+            Assert.AreEqual(_companyProfile.Id, contentResult.Id);
         }
 
         private void ApplicantWorkHistoryCheck()
         {
             ApplicantWorkHistoryController controller = new ApplicantWorkHistoryController();
             ActionResult result = controller.GetApplicantWorkHistory(_appliantWorkHistory.Id);
-            var contentResult = result as OkNegotiatedContentResult<ApplicantWorkHistoryPoco>;
+            //     var contentResult = result as OkNegotiatedContentResult<ApplicantWorkHistoryPoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_appliantWorkHistory.Id, contentResult.Content.Id);
-            Assert.AreEqual(_appliantWorkHistory.Applicant, contentResult.Content.Applicant);
-            Assert.AreEqual(_appliantWorkHistory.CompanyName, contentResult.Content.CompanyName);
-            Assert.AreEqual(_appliantWorkHistory.CountryCode, contentResult.Content.CountryCode);
-            Assert.AreEqual(_appliantWorkHistory.Location, contentResult.Content.Location);
-            Assert.AreEqual(_appliantWorkHistory.JobTitle, contentResult.Content.JobTitle);
-            Assert.AreEqual(_appliantWorkHistory.JobDescription, contentResult.Content.JobDescription);
-            Assert.AreEqual(_appliantWorkHistory.StartMonth, contentResult.Content.StartMonth);
-            Assert.AreEqual(_appliantWorkHistory.StartYear, contentResult.Content.StartYear);
-            Assert.AreEqual(_appliantWorkHistory.EndMonth, contentResult.Content.EndMonth);
-            Assert.AreEqual(_appliantWorkHistory.EndYear, contentResult.Content.EndYear);
+           ApplicantWorkHistoryPoco contentResult = contentResults.Value as ApplicantWorkHistoryPoco;
+
+            //     Assert.IsNotNull(contentResult);
+            //     Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_appliantWorkHistory.Id, contentResult.Id);
+            Assert.AreEqual(_appliantWorkHistory.Applicant, contentResult.Applicant);
+            Assert.AreEqual(_appliantWorkHistory.CompanyName, contentResult.CompanyName);
+            Assert.AreEqual(_appliantWorkHistory.CountryCode, contentResult.CountryCode);
+            Assert.AreEqual(_appliantWorkHistory.Location, contentResult.Location);
+            Assert.AreEqual(_appliantWorkHistory.JobTitle, contentResult.JobTitle);
+            Assert.AreEqual(_appliantWorkHistory.JobDescription, contentResult.JobDescription);
+            Assert.AreEqual(_appliantWorkHistory.StartMonth, contentResult.StartMonth);
+            Assert.AreEqual(_appliantWorkHistory.StartYear, contentResult.StartYear);
+            Assert.AreEqual(_appliantWorkHistory.EndMonth, contentResult.EndMonth);
+            Assert.AreEqual(_appliantWorkHistory.EndYear, contentResult.EndYear);
         }
 
         public void SystemCountryCodeCheck()
         {
             SystemCountryCodeController controller = new SystemCountryCodeController();
             ActionResult result = controller.GetSystemCountryCode(_systemCountry.Code);
-            var contentResult = result as OkNegotiatedContentResult<SystemCountryCodePoco>;
+            //   var contentResult = result as OkNegotiatedContentResult<SystemCountryCodePoco>;
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(_systemCountry.Code, contentResult.Content.Code);
-            Assert.AreEqual(_systemCountry.Name, contentResult.Content.Name);
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
+
+           SystemCountryCodePoco contentResult = contentResults.Value as SystemCountryCodePoco;
+            //  Assert.IsNotNull(contentResult);
+            //    Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(_systemCountry.Code, contentResult.Code);
+            Assert.AreEqual(_systemCountry.Name, contentResult.Name);
         }
 
         private void SystemLanguageCodeCheck()
         {
             SystemLanguageCodeController controller = new SystemLanguageCodeController();
             ActionResult result = controller.GetSystemLanguageCode(_systemLangCode.LanguageID);
-            var contentResult = result as OkNegotiatedContentResult<SystemLanguageCodePoco>;
+            //   var contentResult = result as OkNegotiatedContentResult<SystemLanguageCodePoco>;
+            var contentResults = result as OkObjectResult;
+            Assert.IsNotNull(contentResults);
+            Assert.AreEqual(200, contentResults.StatusCode);
+            Assert.IsNotNull(contentResults.Value);
 
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(contentResult.Content.LanguageID, _systemLangCode.LanguageID);
-            Assert.AreEqual(contentResult.Content.NativeName, _systemLangCode.NativeName);
-            Assert.AreEqual(contentResult.Content.Name, _systemLangCode.Name);
+            SystemLanguageCodePoco contentResult = contentResults.Value as SystemLanguageCodePoco;
+            //     Assert.IsNotNull(contentResult);
+            //     Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual(contentResult.LanguageID, _systemLangCode.LanguageID);
+            Assert.AreEqual(contentResult.NativeName, _systemLangCode.NativeName);
+            Assert.AreEqual(contentResult.Name, _systemLangCode.Name);
         }
 
 
