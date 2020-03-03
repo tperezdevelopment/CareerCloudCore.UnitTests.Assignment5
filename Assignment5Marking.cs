@@ -564,18 +564,20 @@ namespace CareerCloudCore.UnitTests.Assignment5
         {
             ApplicantSkillController controller = new ApplicantSkillController();
             var result = controller.GetApplicantSkill(_applicantSkills.Id);
-            var applicantSkillResult = result as OkNegotiatedContentResult<ApplicantSkillPoco>;
+            var applicantSkillResult = result as ObjectResult;
 
+            Assert.IsNotNull(result);
             Assert.IsNotNull(applicantSkillResult);
-            Assert.IsNotNull(applicantSkillResult.Content);
-            Assert.AreEqual(_applicantSkills.Id, applicantSkillResult.Content.Id);
-            Assert.AreEqual(_applicantSkills.Applicant, applicantSkillResult.Content.Applicant);
-            Assert.AreEqual(_applicantSkills.Skill, applicantSkillResult.Content.Skill);
-            Assert.AreEqual(_applicantSkills.SkillLevel, applicantSkillResult.Content.SkillLevel);
-            Assert.AreEqual(_applicantSkills.StartMonth, applicantSkillResult.Content.StartMonth);
-            Assert.AreEqual(_applicantSkills.StartYear, applicantSkillResult.Content.StartYear);
-            Assert.AreEqual(_applicantSkills.EndMonth, applicantSkillResult.Content.EndMonth);
-            Assert.AreEqual(_applicantSkills.EndYear, applicantSkillResult.Content.EndYear);
+            Assert.IsNotNull(applicantSkillResult.Value);
+            ApplicantSkillPoco poco = (ApplicantSkillPoco)applicantSkillResult.Value;
+            Assert.AreEqual(_applicantSkills.Id, poco.Id);
+            Assert.AreEqual(_applicantSkills.Applicant, poco.Applicant);
+            Assert.AreEqual(_applicantSkills.Skill, poco.Skill);
+            Assert.AreEqual(_applicantSkills.SkillLevel, poco.SkillLevel);
+            Assert.AreEqual(_applicantSkills.StartMonth, poco.StartMonth);
+            Assert.AreEqual(_applicantSkills.StartYear, poco.StartYear);
+            Assert.AreEqual(_applicantSkills.EndMonth, poco.EndMonth);
+            Assert.AreEqual(_applicantSkills.EndYear, apoco.EndYear);
         }
 
         private void ApplicantResumeCheck()
