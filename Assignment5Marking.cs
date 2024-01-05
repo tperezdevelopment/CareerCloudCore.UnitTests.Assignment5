@@ -1,4 +1,5 @@
 using CareerCloud.Pocos;
+using CareerCloud.WebAPI.Controllers; //Adding by tperezdevelopment
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
